@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Recharge Console</title>
+    <style>
+        :root {
+            --bg-gradient: linear-gradient(140deg, #0e172a, #1e293b);
+            --card-bg: #ffffff;
+            --card-shadow: 0 28px 60px rgba(15, 23, 42, 0.25);
+            --accent: #10b981;
+            --accent-dark: #0c9467;
+            --text-strong: #0f172a;
+            --text-muted: #4b5563;
+            --text-soft: #64748b;
+            --border-color: rgba(15, 23, 42, 0.08);
+            --field-bg: #f8fafc;
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --transition: 0.25s ease;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "Inter", "Segoe UI", sans-serif;
+            background: var(--bg-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: clamp(1.5rem, 4vw, 3rem);
+            color: var(--text-strong);
+        }
+
+        .card {
+            width: min(480px, 100%);
+            background: var(--card-bg);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--card-shadow);
+            padding: clamp(2rem, 4vw, 2.75rem);
+            display: grid;
+            gap: 2rem;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .badge {
+            width: 52px;
+            height: 52px;
+            border-radius: 16px;
+            background: linear-gradient(140deg, var(--accent), #22d3ee);
+            display: grid;
+            place-items: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            letter-spacing: 0.08em;
+            color: #f0fdf4;
+        }
+
+        .header-copy h1 {
+            margin: 0;
+            font-size: clamp(1.5rem, 4vw, 2rem);
+        }
+
+        .header-copy p {
+            margin: 0.35rem 0 0;
+            color: var(--text-soft);
+            font-size: 0.95rem;
+        }
+
+        .form {
+            display: grid;
+            gap: 1.35rem;
+        }
+
+        .field {
+            display: grid;
+            gap: 0.55rem;
+        }
+
+        .field label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+        }
+
+        select,
+        input[type="text"] {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--field-bg);
+            font-size: 1rem;
+            transition: border-color var(--transition), box-shadow var(--transition), background var(--transition);
+        }
+
+        select:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: rgba(16, 185, 129, 0.55);
+            background: #fff;
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.15);
+        }
+
+        select {
+            appearance: none;
+            background-image: url('data:image/svg+xml,%3Csvg width="12" height="7" viewBox="0 0 12 7" xmlns="http://www.w3.org/2000/svg"%3E%3Cpath d="M1 1l5 5 5-5" stroke="%2316263b" stroke-width="1.4" fill="none" stroke-linecap="round"/%3E%3C/svg%3E');
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.95rem 1.5rem;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 1.05rem;
+            letter-spacing: 0.015em;
+            color: #f8fafc;
+            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            text-decoration: none;
+            transition: transform var(--transition), box-shadow var(--transition), opacity var(--transition);
+        }
+
+        .cta:hover { transform: translateY(-2px); box-shadow: 0 18px 34px rgba(16, 185, 129, 0.25); }
+        .cta.disabled {
+            background: rgba(15, 23, 42, 0.12);
+            color: rgba(15, 23, 42, 0.35);
+            box-shadow: none;
+            transform: none;
+            cursor: not-allowed;
+        }
+
+        .tips {
+            display: grid;
+            gap: 0.9rem;
+        }
+
+        .tip {
+            display: flex;
+            align-items: center;
+            gap: 0.85rem;
+            padding: 0.85rem 1rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--field-bg);
+            color: var(--text-soft);
+            font-size: 0.9rem;
+        }
+
+        .tip::before {
+            content: "✔";
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 540px) {
+            .card { padding: clamp(1.75rem, 6vw, 2.2rem); }
+            .tips { gap: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <header class="header">
+            <div class="badge">B2</div>
+            <div class="header-copy">
+                <h1>Recharge Console</h1>
+                <p>Compose the correct USSD command for your voucher in seconds.</p>
+            </div>
+        </header>
+        <form class="form" onsubmit="return false;">
+            <div class="field">
+                <label for="amountSelect">Amount</label>
+                <select id="amountSelect" onchange="updateUssdCode()">
+                    <option value="">Choose amount</option>
+                    <option value="10000">10 TND</option>
+                    <option value="20000">20 TND</option>
+                    <option value="30000">30 TND</option>
+                    <option value="40000">40 TND</option>
+                    <option value="50000">50 TND</option>
+                    <option value="60000">60 TND</option>
+                    <option value="70000">70 TND</option>
+                    <option value="80000">80 TND</option>
+                    <option value="90000">90 TND</option>
+                    <option value="100000">100 TND</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="operatorSelect">Operator</label>
+                <select id="operatorSelect" onchange="updateUssdCode()">
+                    <option value="">Choose operator</option>
+                    <option value="ooredoo">Ooredoo</option>
+                    <option value="orange">Orange</option>
+                    <option value="telecom">Telecom</option>
+                </select>
+            </div>
+            <div class="field">
+                <label for="code">Recharge code</label>
+                <input type="text" id="code" placeholder="Enter voucher digits" oninput="updateUssdCode()" autocomplete="one-time-code" inputmode="numeric">
+            </div>
+            <a href="tel:" id="dialButton" class="cta disabled">Recharge now</a>
+        </form>
+        <section class="tips">
+            <div class="tip">Select the voucher amount you plan to add.</div>
+            <div class="tip">Choose the mobile operator to ensure the correct command format.</div>
+            <div class="tip">Enter the recharge digits exactly as printed on the card.</div>
+            <div class="tip">Launch the generated command and complete the prompts on your phone.</div>
+        </section>
+    </div>
+
+    <script>
+        const ussdCodes = {
+            ooredoo: '*112*{code}*6*1*544565464*{amount}%23',
+            orange: '*119*3*1*545465456*{code}*{amount}*7%23',
+            telecom: '*104*3*1*54564654*{code}*{amount}*1%23'
+        };
+
+        const amountSelect = document.getElementById('amountSelect');
+        const operatorSelect = document.getElementById('operatorSelect');
+        const codeField = document.getElementById('code');
+        const dialButton = document.getElementById('dialButton');
+
+        function getSelectedLabel(select) {
+            const option = select.options[select.selectedIndex];
+            return option ? option.textContent : '';
+        }
+
+        function updateUssdCode() {
+            const amount = amountSelect.value;
+            const operator = operatorSelect.value;
+            const code = codeField.value.trim();
+            const amountLabel = amount ? getSelectedLabel(amountSelect) : '';
+
+            if (amount && operator && code) {
+                const operatorPattern = ussdCodes[operator];
+                const ussdCode = operatorPattern
+                    .replace('{code}', code)
+                    .replace('{amount}', amount);
+
+                dialButton.href = `tel:${ussdCode}`;
+                dialButton.textContent = `Recharge ${amountLabel}`;
+                dialButton.classList.remove('disabled');
+            } else {
+                dialButton.href = 'tel:';
+                dialButton.textContent = 'Recharge now';
+                dialButton.classList.add('disabled');
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', updateUssdCode);
+    </script>
+</body>
+</html>
