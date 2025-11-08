@@ -64,27 +64,16 @@
       border-radius: 10px;
       display: block;
     }
-    .video-container {
-      position: relative;
-      padding-bottom: 56.25%;
-      height: 0;
-      overflow: hidden;
-      border-radius: 10px;
-      margin-top: 20px;
-    }
-    .video-container iframe {
-      position: absolute;
-      top: 0;
-      left: 0;
+    .tutorial-gif {
       width: 100%;
-      height: 100%;
-      border: 0;
+      margin-top: 20px;
+      border-radius: 12px;
     }
   </style>
 </head>
 <body>
   <div class="container">
-    <h2>Bénéficiaire</h2>
+    <h2>IZI PAYMENT</h2>
     <div class="attention">
       ⚠️ تنبيه: يرجى اختيار نوع المحفظة (Wallet) عند إدخال الرقم. في حال إدخال الرقم في الخانة الخاطئة سيتم فقدان الإيداع نهائياً.
     </div>
@@ -96,21 +85,12 @@
       <label>Nom</label>
       <button class="btn" id="copyNom">Copier le nom</button>
 
-      <label>Numero Wallet</label>
+      <label>Numéro Wallet</label>
       <button class="btn" id="copyNumero">Copier le numéro</button>
 
-      <img class="wallet-image" src="https://i.imgur.com/zVtGBNp.png" alt="Type de Wallet">
     </div>
 
-    <div class="video-container">
-      <iframe
-        src="https://www.youtube.com/embed/2bEQvnP4D5o?autoplay=1&mute=1&loop=1&playsinline=1&playlist=2bEQvnP4D5o"
-        title="YouTube video player"
-        allow="autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen>
-      </iframe>
-    </div>
+    <img class="tutorial-gif" src="https://i.imgur.com/FcqzFVT.gif" alt="Tutoriel GIF">
   </div>
 
   <script>
