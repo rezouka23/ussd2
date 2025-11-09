@@ -51,6 +51,12 @@
     .btn:hover {
       background-color: #0056b3;
     }
+    .tutorial-btn {
+      background-color: #28a745;
+    }
+    .tutorial-btn:hover {
+      background-color: #1f7e32;
+    }
     label {
       display: block;
       margin-bottom: 6px;
@@ -64,10 +70,52 @@
       border-radius: 10px;
       display: block;
     }
-    .tutorial-gif {
+
+    /* Overlay modal styles */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
       width: 100%;
-      margin-top: 20px;
-      border-radius: 12px;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .overlay-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90%;
+      border-radius: 10px;
+      overflow: hidden;
+      background-color: #000;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+    .overlay-content img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+    .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      font-size: 26px;
+      color: white;
+      cursor: pointer;
+      background: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: 0.2s;
+    }
+    .close-btn:hover {
+      background: rgba(255,255,255,0.2);
     }
   </style>
 </head>
@@ -85,22 +133,29 @@
       <label>Nom</label>
       <button class="btn" id="copyNom">Copier le nom</button>
 
-      <label>Numéro Wallet</label>
+      <label>Numéro de téléphone</label>
       <button class="btn" id="copyNumero">Copier le numéro</button>
 
     </div>
 
-    <img class="tutorial-gif" src="https://i.imgur.com/FcqzFVT.gif" alt="Tutoriel GIF">
+    <button class="btn tutorial-btn" id="openTutorial">🎬 Voir le tutoriel</button>
+  </div>
+
+  <!-- Overlay Modal -->
+  <div class="overlay" id="tutorialOverlay">
+    <div class="overlay-content">
+      <span class="close-btn" id="closeOverlay">&times;</span>
+      <img src="https://i.imgur.com/K60ys18.mp4" alt="Tutoriel GIF">
+    </div>
   </div>
 
   <script>
-    // Get query parameters
+    // Copy buttons
     const params = new URLSearchParams(window.location.search);
     const nom = params.get('nom') || 'Nom non défini';
     const prenom = params.get('prenom') || 'Prénom non défini';
     const numero = params.get('numero') || 'Numéro non défini';
 
-    // Copy functions
     document.getElementById('copyPrenom').onclick = () => copyValue(prenom, 'le prénom');
     document.getElementById('copyNom').onclick = () => copyValue(nom, 'le nom');
     document.getElementById('copyNumero').onclick = () => copyValue(numero, 'le numéro');
@@ -110,6 +165,17 @@
         .then(() => alert(`${label} "${value}" copié avec succès !`))
         .catch(err => alert("Erreur de copie : " + err));
     }
+
+    // Overlay logic
+    const overlay = document.getElementById('tutorialOverlay');
+    const openBtn = document.getElementById('openTutorial');
+    const closeBtn = document.getElementById('closeOverlay');
+
+    openBtn.addEventListener('click', () => overlay.style.display = 'flex');
+    closeBtn.addEventListener('click', () => overlay.style.display = 'none');
+    overlay.addEventListener('click', e => {
+      if (e.target === overlay) overlay.style.display = 'none';
+    });
   </script>
 </body>
 </html>
