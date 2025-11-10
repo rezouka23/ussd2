@@ -46,10 +46,14 @@
       font-size: 16px;
       margin-bottom: 15px;
       cursor: pointer;
-      transition: background-color 0.2s;
+      transition: background-color 0.2s, transform 0.1s;
     }
     .btn:hover {
       background-color: #0056b3;
+    }
+    .btn:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
     }
     .tutorial-btn {
       background-color: #28a745;
@@ -94,7 +98,7 @@
     .overlay-content video {
       width: 100%;
       height: 100%;
-      object-fit: contain; /* ensures full video visible */
+      object-fit: contain;
     }
     .close-btn {
       position: absolute;
@@ -151,23 +155,38 @@
   </div>
 
   <script>
-    // Copy buttons
+    // === URL Params ===
     const params = new URLSearchParams(window.location.search);
     const nom = params.get('nom') || 'Nom non défini';
     const prenom = params.get('prenom') || 'Prénom non défini';
     const numero = params.get('numero') || 'Numéro non défini';
 
-    document.getElementById('copyPrenom').onclick = () => copyValue(prenom, 'le prénom');
-    document.getElementById('copyNom').onclick = () => copyValue(nom, 'le nom');
-    document.getElementById('copyNumero').onclick = () => copyValue(numero, 'le numéro');
-
-    function copyValue(value, label) {
-      navigator.clipboard.writeText(value)
-        .then(() => alert(`${label} "${value}" copié avec succès !`))
-        .catch(err => alert("Erreur de copie : " + err));
+    // === Copy function with inline feedback ===
+    function copyAndChange(buttonId, value, originalText, successText) {
+      const btn = document.getElementById(buttonId);
+      navigator.clipboard.writeText(value).then(() => {
+        btn.textContent = successText;
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 1500);
+      }).catch(err => {
+        console.error("Erreur de copie :", err);
+      });
     }
 
-    // Overlay logic
+    // === Assign copy actions ===
+    document.getElementById('copyPrenom').onclick = () =>
+      copyAndChange('copyPrenom', prenom, 'Copier le prénom', 'Prénom copié ✅');
+
+    document.getElementById('copyNom').onclick = () =>
+      copyAndChange('copyNom', nom, 'Copier le nom', 'Nom copié ✅');
+
+    document.getElementById('copyNumero').onclick = () =>
+      copyAndChange('copyNumero', numero, 'Copier le numéro', 'Numéro copié ✅');
+
+    // === Overlay logic ===
     const overlay = document.getElementById('tutorialOverlay');
     const openBtn = document.getElementById('openTutorial');
     const closeBtn = document.getElementById('closeOverlay');
@@ -186,7 +205,7 @@
     };
 
     closeBtn.addEventListener('click', (e) => {
-      e.stopPropagation(); // ensures click doesn't bubble to overlay
+      e.stopPropagation();
       closeOverlayFn();
     });
 
