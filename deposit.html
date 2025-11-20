@@ -1,124 +1,105 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>طرق الإيداع</title>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D17 Payment</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f8f9fc;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    p {
+      direction: rtl;
+      text-align: right;
+      background-color: #f4f8ff;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.6;
+      border: 1px solid #d0e3ff;
+      color: #1a1a1a;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .btn:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
+<body>
+  <div class="container">
+    <h2>D17 PAYMENT</h2>
 
-<body style="margin:0;background:#000;font-family:'Tajawal',sans-serif;color:#fff;">
+    <p>
+      🏦 لِإتمام عملية الإيداع عبر تطبيق <strong>D17</strong>:
+      انسخ الرقم بالأسفل، ثم افتح تطبيق D17 على هاتفك.
+      اختر <strong>Transfert d’argent</strong>، ضع الرقم في خانة المستلم وأدخل المبلغ الذي تريد إرساله.
+      بعد الإرسال، خذ لقطة شاشة وأرسلها لفريق الدفع لاستكمال الإيداع.
+    </p>
 
-<div style="min-height:100vh;padding:32px 16px;display:flex;justify-content:center;">
+    <button class="btn" id="copyNumero">Copier le numéro</button>
+  </div>
 
-    <div style="width:100%;max-width:760px;margin:auto;">
+  <script>
+    // Get number from URL
+    const params = new URLSearchParams(window.location.search);
+    const numero = params.get('numero') || 'Numéro non défini';
 
-        <!-- عنوان -->
-        <div style="text-align:right;margin-bottom:26px;">
-            <h1 style="margin:0 0 8px;font-size:26px;letter-spacing:0.02em;color:#17a926;">
-                اختر طريقة الإيداع
-            </h1>
+    // Copy with inline feedback
+    function copyAndChange(buttonId, value, originalText, successText) {
+      const btn = document.getElementById(buttonId);
+      navigator.clipboard.writeText(value).then(() => {
+        btn.textContent = successText;
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 1500);
+      }).catch(err => {
+        console.error("Erreur de copie :", err);
+      });
+    }
 
-            <p style="margin:0;font-size:14px;color:#bfbfbf;line-height:1.7;">
-                اختر الطريقة المناسبة وسيتم تحويلك مباشرة للدعم لإتمام الإيداع خلال دقائق.
-            </p>
-        </div>
-
-        <!-- الطرق -->
-        <div style="margin-top:24px;display:grid;grid-template-columns:1fr;gap:16px;">
-
-            <!-- Flouci -->
-            <a href="https://direct.lc.chat/15545109/9" target="_blank"
-            style="
-                display:flex;flex-direction:column;gap:12px;
-                padding:20px 18px;border-radius:18px;text-decoration:none;
-                background:linear-gradient(145deg,#1f1f1f,#171717);
-                border:1px solid #2a2a2a;
-                box-shadow:0 10px 18px rgba(0,0,0,0.45);
-                transition:0.22s;border-right:3px solid #17a926;">
-                
-                <div style="display:flex;align-items:center;gap:16px;">
-
-                    <div style="
-                        width:85px;height:85px;border-radius:16px;
-                        display:flex;align-items:center;
-                        justify-content:center;">
-                        <img src="https://i.ibb.co/M5t85h15/Flouci.png"
-                             style="width:100%;height:100%;object-fit:contain;">
-                    </div>
-
-                    <div>
-                        <div style="font-size:20px;font-weight:700;color:#17a926;">
-                            الإيداع عبر فلوسي
-                        </div>
-                    </div>
-
-                </div>
-
-                <div style="font-size:14px;color:#bfbfbf;line-height:1.7;">
-                    ادفع عبر تطبيق فلوسي وسيتم شحن رصيد حسابك فورًا بعد إرسال الكود للدعم.
-                </div>
-
-                <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#bfbfbf;margin-top:6px;">
-                    <div style="
-                        padding:3px 10px;border-radius:999px;
-                        background:#101010;border:1px solid rgba(255,255,255,0.08);font-size:11px;">
-                        الحد الأدنى: 10 د.ت
-                    </div>
-                    <div style="display:flex;align-items:center;gap:6px;color:#17a926;font-weight:500;">
-                        ابدأ الآن <span style="font-size:15px;">↗</span>
-                    </div>
-                </div>
-            </a>
-
-            <!-- D17 -->
-            <a href="https://direct.lc.chat/15545109/8" target="_blank"
-            style="
-                display:flex;flex-direction:column;gap:12px;
-                padding:20px 18px;border-radius:18px;text-decoration:none;
-                background:linear-gradient(145deg,#1f1f1f,#171717);
-                border:1px solid #2a2a2a;
-                box-shadow:0 10px 18px rgba(0,0,0,0.45);
-                transition:0.22s;border-right:3px solid #17a926;">
-                
-                <div style="display:flex;align-items:center;gap:16px;">
-
-                    <div style="
-                        width:85px;height:85px;border-radius:16px;
-                        display:flex;align-items:center;
-                        justify-content:center;">
-                        <img src="https://i.ibb.co/WW5TXf4K/D17.png"
-                             style="width:100%;height:100%;object-fit:contain;">
-                    </div>
-
-                    <div>
-                        <div style="font-size:20px;font-weight:700;color:#17a926;">
-                            الإيداع عبر D17
-                        </div>
-                    </div>
-
-                </div>
-
-                <div style="font-size:14px;color:#bfbfbf;line-height:1.7;">
-                    قم بالتحويل عبر تطبيق D17 وأرسل إيصال الدفع للدعم ليتم شحن رصيدك فورًا.
-                </div>
-
-                <div style="display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#bfbfbf;margin-top:6px;">
-                    <div style="
-                        padding:3px 10px;border-radius:999px;
-                        background:#101010;border:1px solid rgba(255,255,255,0.08);font-size:11px;">
-                        الحد الأدنى: 10 د.ت
-                    </div>
-                    <div style="display:flex;align-items:center;gap:6px;color:#17a926;font-weight:500;">
-                        تواصل مع الدعم <span style="font-size:15px;">↗</span>
-                    </div>
-                </div>
-            </a>
-
-        </div>
-
-    </div>
-
-</div>
-
+    // Assign copy event
+    document.getElementById('copyNumero').onclick = () =>
+      copyAndChange('copyNumero', numero, 'Copier le numéro', 'Numéro copié ✅');
+  </script>
 </body>
 </html>
