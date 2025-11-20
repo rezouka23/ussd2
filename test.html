@@ -1,1 +1,121 @@
-test
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flouci Payment</title>
+  <style>
+    body {
+      font-family: "Segoe UI", sans-serif;
+      background-color: #f8f9fc;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 480px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 14px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+
+    h2 {
+      margin-bottom: 15px;
+    }
+
+    p {
+      direction: rtl;
+      text-align: right;
+      background-color: #f4f8ff;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 15px;
+      line-height: 1.6;
+      border: 1px solid #d0e3ff;
+      color: #1a1a1a;
+    }
+
+    .attention {
+      background-color: #fff4e5;
+      color: #b45b00;
+      border: 1px solid #ffc107;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 15px;
+      direction: rtl;
+      text-align: right;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: block;
+      width: 100%;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-top: 20px;
+      cursor: pointer;
+      transition: background-color 0.2s, transform 0.1s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+
+    .btn:disabled {
+      opacity: 0.8;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>FLOUCI PAYMENT</h2>
+
+    <p>
+      مرحبا سيدي. إنسخ الرَّقَم وإفتح تطبيق فلوسي الخاص بك، اضغط على زر <strong>ابْعَث - Envoyer -</strong> الذي يظهر أسفل الشاشة،
+      ضع الرَّقَم في خانة <strong>Recherche</strong> واختر الاسم الذي يقترحه فلوسي، ثم ضع المبلغ وقم بالإرسال.
+      عندما تنتهي، خذ لقطة شاشة للعملية التي قمت بها وأرسلها لاستكمال عملية الإيداع.
+    </p>
+
+    <div class="attention">
+      ⚠️ عند إدخال الرقم في خانة البحث داخل تطبيق فلوسي، تأكد من اختيار الاسم الذي يقترحه التطبيق بالضبط قبل الإرسال، لأن أي اختلاف في الاسم قد يؤدي إلى فشل العملية أو إرسالها إلى شخص آخر.
+    </div>
+
+    <button class="btn" id="copyNumero">Copier le numéro</button>
+  </div>
+
+  <script>
+    // Get number from URL
+    const params = new URLSearchParams(window.location.search);
+    const numero = params.get('numero') || 'Numéro non défini';
+
+    // Copy with feedback
+    function copyAndChange(buttonId, value, originalText, successText) {
+      const btn = document.getElementById(buttonId);
+      navigator.clipboard.writeText(value).then(() => {
+        btn.textContent = successText;
+        btn.disabled = true;
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+        }, 1500);
+      }).catch(err => {
+        console.error("Erreur de copie :", err);
+      });
+    }
+
+    // Assign copy event
+    document.getElementById('copyNumero').onclick = () =>
+      copyAndChange('copyNumero', numero, 'Copier le numéro', 'Numéro copié ✅');
+  </script>
+</body>
+</html>
