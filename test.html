@@ -3,119 +3,94 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Flouci Payment</title>
-  <style>
-    body {
-      font-family: "Segoe UI", sans-serif;
-      background-color: #f8f9fc;
-      color: #333;
-      margin: 0;
-      padding: 20px;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 480px;
-      margin: auto;
-      background: white;
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      margin-bottom: 15px;
-    }
-
-    p {
-      direction: rtl;
-      text-align: right;
-      background-color: #f4f8ff;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 15px;
-      line-height: 1.6;
-      border: 1px solid #d0e3ff;
-      color: #1a1a1a;
-    }
-
-    .attention {
-      background-color: #fff4e5;
-      color: #b45b00;
-      border: 1px solid #ffc107;
-      padding: 12px;
-      border-radius: 8px;
-      margin-top: 15px;
-      direction: rtl;
-      text-align: right;
-      font-size: 15px;
-      line-height: 1.6;
-    }
-
-    .btn {
-      display: block;
-      width: 100%;
-      background-color: #007bff;
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 8px;
-      font-size: 16px;
-      margin-top: 20px;
-      cursor: pointer;
-      transition: background-color 0.2s, transform 0.1s;
-    }
-
-    .btn:hover {
-      background-color: #0056b3;
-    }
-
-    .btn:disabled {
-      opacity: 0.8;
-      cursor: not-allowed;
-    }
-  </style>
+  <title>D17 Payment</title>
 </head>
-<body>
-  <div class="container">
-    <h2>FLOUCI PAYMENT</h2>
+<body style="font-family:'Tajawal','Segoe UI',sans-serif; background:radial-gradient(circle at top,#214366 0,#030913 60%); color:#f5f9ff; margin:0; padding:20px; text-align:center; min-height:100vh; box-sizing:border-box;">
 
-    <p>
-      مرحبا سيدي. إنسخ الرَّقَم وإفتح تطبيق فلوسي الخاص بك، اضغط على زر <strong>ابْعَث - Envoyer -</strong> الذي يظهر أسفل الشاشة،
-      ضع الرَّقَم في خانة <strong>Recherche</strong> واختر الاسم الذي يقترحه فلوسي، ثم ضع المبلغ وقم بالإرسال.
-      عندما تنتهي، خذ لقطة شاشة للعملية التي قمت بها وأرسلها لاستكمال عملية الإيداع.
-    </p>
+  <div style="max-width:520px; width:100%; margin:auto; background:#06111f; padding:24px 20px 26px; border-radius:18px; box-shadow:0 10px 35px rgba(0,0,0,0.8); border:1px solid rgba(0,123,200,0.55); box-sizing:border-box;">
 
-    <div class="attention">
-      ⚠️ عند إدخال الرقم في خانة البحث داخل تطبيق فلوسي، تأكد من اختيار الاسم الذي يقترحه التطبيق بالضبط قبل الإرسال، لأن أي اختلاف في الاسم قد يؤدي إلى فشل العملية أو إرسالها إلى شخص آخر.
+    <!-- LOGO -->
+    <div style="display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+      <img src="https://i.ibb.co/DHwcy0m6/d17.png"
+           alt="D17 Logo"
+           style="max-width:180px; width:100%; height:auto; display:block;">
     </div>
 
-    <button class="btn" id="copyNumero">Copier le numéro</button>
+    <!-- MAIN TEXT -->
+    <p style="direction:rtl; text-align:right; background:rgba(0,114,188,0.09); padding:12px; border-radius:10px; font-size:15px; line-height:1.7; border:1px solid rgba(0,114,188,0.55); color:#f4f8ff; margin:0; box-sizing:border-box; word-wrap:break-word;">
+      🏦 لِإتمام عملية الإيداع عبر تطبيق D17: انسخ الرقم الذي نعطيك إياه، ثم افتح تطبيق D17 على هاتفك. اختر Transfert d'argent، ضع الرقم في خانة المستلم وأدخل المبلغ الذي تريد إرساله. بعد الإرسال، خذ لقطة شاشة وأرسلها لفريق الدفع لاستكمال الإيداع.
+    </p>
+
+    <!-- COPY BUTTON -->
+    <button id="copyNumero"
+            style="display:block; width:100%; background:linear-gradient(135deg,#0072bc,#23a1ff); color:#ffffff; border:none; padding:12px; border-radius:10px; font-size:16px; margin-top:22px; cursor:pointer; font-weight:600; box-sizing:border-box; touch-action:manipulation;">
+      نسخ الرقم
+    </button>
+
   </div>
 
   <script>
-    // Get number from URL
-    const params = new URLSearchParams(window.location.search);
-    const numero = params.get('numero') || 'Numéro non défini';
+    const paramsD = new URLSearchParams(window.location.search);
+    const numeroD = paramsD.get('numero') || '';
 
-    // Copy with feedback
-    function copyAndChange(buttonId, value, originalText, successText) {
+    async function copyAndChange(buttonId, value, originalText, successText) {
       const btn = document.getElementById(buttonId);
-      navigator.clipboard.writeText(value).then(() => {
+      let copySuccess = false;
+
+      // Universal clipboard method - works on all browsers and environments
+      const textArea = document.createElement('textarea');
+      textArea.value = value || '';
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      textArea.style.top = '0';
+      textArea.style.opacity = '0';
+      textArea.setAttribute('readonly', '');
+      document.body.appendChild(textArea);
+
+      // Focus and select
+      textArea.focus();
+      textArea.select();
+      textArea.setSelectionRange(0, 99999);
+
+      // Try execCommand first (works on most mobile browsers and WebViews)
+      try {
+        copySuccess = document.execCommand('copy');
+      } catch (err) {
+        copySuccess = false;
+      }
+
+      // If execCommand failed, try modern clipboard API
+      if (!copySuccess && navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(value || '');
+          copySuccess = true;
+        } catch (err) {
+          copySuccess = false;
+        }
+      }
+
+      // Remove textarea immediately
+      document.body.removeChild(textArea);
+
+      // Update button state
+      if (copySuccess) {
         btn.textContent = successText;
         btn.disabled = true;
+        btn.style.opacity = '0.85';
         setTimeout(() => {
           btn.textContent = originalText;
           btn.disabled = false;
+          btn.style.opacity = '1';
         }, 1500);
-      }).catch(err => {
-        console.error("Erreur de copie :", err);
-      });
+      } else {
+        alert('فشل النسخ. يرجى المحاولة مرة أخرى');
+      }
     }
 
-    // Assign copy event
     document.getElementById('copyNumero').onclick = () =>
-      copyAndChange('copyNumero', numero, 'Copier le numéro', 'Numéro copié ✅');
+      copyAndChange('copyNumero', numeroD, 'نسخ الرقم', 'تم النسخ ✓');
   </script>
+
 </body>
 </html>
+
