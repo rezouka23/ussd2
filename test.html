@@ -2,36 +2,44 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>D17 Payment</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <title>Flouci Payment</title>
 </head>
-<body style="font-family:'Tajawal','Segoe UI',sans-serif; background:radial-gradient(circle at top,#214366 0,#030913 60%); color:#f5f9ff; margin:0; padding:20px; text-align:center; min-height:100vh; box-sizing:border-box;">
 
-  <div style="max-width:520px; width:100%; margin:auto; background:#06111f; padding:24px 20px 26px; border-radius:18px; box-shadow:0 10px 35px rgba(0,0,0,0.8); border:1px solid rgba(0,123,200,0.55); box-sizing:border-box;">
+<body style="font-family:'Tajawal','Segoe UI',sans-serif; background:#050505; margin:0; padding:12px; text-align:center; color:#f5f5f5; min-height:100vh; box-sizing:border-box;">
 
-    <!-- LOGO -->
-    <div style="display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
-      <img src="https://i.ibb.co/DHwcy0m6/d17.png"
-           alt="D17 Logo"
-           style="max-width:180px; width:100%; height:auto; display:block;">
+  <div style="max-width:380px; width:100%; margin:auto; background:#121212; padding:18px 16px 20px; border-radius:16px; box-shadow:0 6px 20px rgba(0,0,0,0.65); border:1px solid #1f1f1f; box-sizing:border-box;">
+
+    <!-- UPDATED LOGO -->
+    <div style="display:flex; align-items:center; justify-content:center; margin-bottom:12px;">
+      <img src="https://i.ibb.co/hxD9tc5h/11-12.png"
+           alt="Flouci Logo"
+           style="max-width:110px; width:100%; height:auto; display:block;">
     </div>
 
-    <!-- MAIN TEXT -->
-    <p style="direction:rtl; text-align:right; background:rgba(0,114,188,0.09); padding:12px; border-radius:10px; font-size:15px; line-height:1.7; border:1px solid rgba(0,114,188,0.55); color:#f4f8ff; margin:0; box-sizing:border-box; word-wrap:break-word;">
-      🏦 لِإتمام عملية الإيداع عبر تطبيق D17: انسخ الرقم الذي نعطيك إياه، ثم افتح تطبيق D17 على هاتفك. اختر Transfert d'argent، ضع الرقم في خانة المستلم وأدخل المبلغ الذي تريد إرساله. بعد الإرسال، خذ لقطة شاشة وأرسلها لفريق الدفع لاستكمال الإيداع.
+    <!-- INSTRUCTIONS -->
+    <p style="direction:rtl; text-align:right; background:rgba(255,138,60,0.08); padding:10px; border-radius:8px; font-size:14px; line-height:1.6; border:1px solid rgba(255,138,60,0.35); margin:0; box-sizing:border-box; word-wrap:break-word;">
+      لِإتمام عملية الإيداع عبر Flouci:
+      انسخ الرقم، افتح تطبيق Flouci، اضغط على <strong>Envoyer / ابعَث</strong>، ضع الرقم في خانة <strong>Recherche</strong>، اختر المستلم ثم أرسل المبلغ.
+      بعد الإرسال، التقط لقطة شاشة وأرسلها للدعم.
     </p>
 
-    <!-- COPY BUTTON -->
+    <!-- WARNING BOX -->
+    <div style="background:rgba(255,196,138,0.07); color:#ffb45c; border:1px solid rgba(255,196,138,0.6); padding:10px; border-radius:8px; margin-top:12px; direction:rtl; text-align:right; font-size:13px; line-height:1.6; box-sizing:border-box; word-wrap:break-word;">
+      ⚠️ يرجى التأكد من تطابق الاسم الظاهر في Flouci مع الاسم الذي نعطيه لك.
+    </div>
+
+    <!-- COPY BUTTON ONLY -->
     <button id="copyNumero"
-            style="display:block; width:100%; background:linear-gradient(135deg,#0072bc,#23a1ff); color:#ffffff; border:none; padding:12px; border-radius:10px; font-size:16px; margin-top:22px; cursor:pointer; font-weight:600; box-sizing:border-box; touch-action:manipulation;">
+            style="display:block; width:100%; background:linear-gradient(135deg,#ff8a3c,#ffb35f); color:#111; border:none; padding:12px; border-radius:10px; font-size:15px; margin-top:18px; cursor:pointer; font-weight:600; touch-action:manipulation; box-sizing:border-box;">
       نسخ الرقم
     </button>
 
   </div>
 
   <script>
-    const paramsD = new URLSearchParams(window.location.search);
-    const numeroD = paramsD.get('numero') || '';
+    const params = new URLSearchParams(window.location.search);
+    const numero = params.get('numero') || '';
 
     async function copyAndChange(buttonId, value, originalText, successText) {
       const btn = document.getElementById(buttonId);
@@ -76,19 +84,19 @@
       if (copySuccess) {
         btn.textContent = successText;
         btn.disabled = true;
-        btn.style.opacity = '0.85';
+        btn.style.opacity = "0.85";
         setTimeout(() => {
           btn.textContent = originalText;
           btn.disabled = false;
-          btn.style.opacity = '1';
-        }, 1500);
+          btn.style.opacity = "1";
+        }, 1400);
       } else {
         alert('فشل النسخ. يرجى المحاولة مرة أخرى');
       }
     }
 
     document.getElementById('copyNumero').onclick = () =>
-      copyAndChange('copyNumero', numeroD, 'نسخ الرقم', 'تم النسخ ✓');
+      copyAndChange('copyNumero', numero, 'نسخ الرقم', 'تم النسخ ✓');
   </script>
 
 </body>
