@@ -1,238 +1,96 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Recharge Console</title>
-    <style>
-        :root {
-            --accent: #17A926;
-            --accent-dark: #12881e;
-            --text-strong: #0f172a;
-            --text-muted: #4b5563;
-            --text-soft: #64748b;
-            --border-color: rgba(15, 23, 42, 0.08);
-            --field-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --radius-md: 16px;
-            --radius-sm: 12px;
-            --transition: 0.25s ease;
-        }
-
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: "Inter", "Segoe UI", sans-serif;
-            background: #f3f4f6;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem;
-            color: var(--text-strong);
-        }
-
-        .card {
-            width: min(480px, 100%);
-            background: var(--card-bg);
-            border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
-            padding: 2rem;
-            display: grid;
-            gap: 2rem;
-        }
-
-        .header {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .badge {
-            width: 52px;
-            height: 52px;
-            border-radius: 16px;
-            background: var(--accent);
-            display: grid;
-            place-items: center;
-            font-weight: 700;
-            font-size: 1.3rem;
-            letter-spacing: 0.08em;
-            color: #f0fdf4;
-        }
-
-        .header-copy p {
-            margin: 0.35rem 0 0;
-            color: var(--text-soft);
-            font-size: 0.95rem;
-        }
-
-        .form {
-            display: grid;
-            gap: 1.35rem;
-        }
-
-        .field label {
-            font-weight: 600;
-            font-size: 0.9rem;
-            color: var(--text-muted);
-        }
-
-        select,
-        input[type="text"] {
-            width: 100%;
-            padding: 0.9rem 1rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            background: var(--field-bg);
-            font-size: 1rem;
-        }
-
-        input[type="text"]:focus,
-        select:focus {
-            outline: none;
-            border-color: var(--accent);
-            box-shadow: 0 0 0 4px rgba(23, 169, 38, 0.15);
-            background: #fff;
-        }
-
-        .cta {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.95rem 1.5rem;
-            border-radius: var(--radius-md);
-            font-weight: 600;
-            font-size: 1.05rem;
-            color: #fff;
-            background: var(--accent);
-            text-decoration: none;
-            transition: transform var(--transition), box-shadow var(--transition);
-        }
-
-        .cta:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(23, 169, 38, 0.25); }
-        .cta.disabled { background: rgba(15, 23, 42, 0.15); color: rgba(15, 23, 42, 0.5); cursor: not-allowed; }
-
-        .tips {
-            display: grid;
-            gap: 0.9rem;
-        }
-
-        .tip {
-            display: flex;
-            align-items: center;
-            gap: 0.85rem;
-            padding: 0.85rem 1rem;
-            border-radius: var(--radius-sm);
-            border: 1px solid var(--border-color);
-            background: var(--field-bg);
-            color: var(--text-soft);
-            font-size: 0.9rem;
-        }
-
-        .tip::before {
-            content: "i";
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            background: rgba(23, 169, 38, 0.12);
-            color: var(--accent);
-            display: grid;
-            place-items: center;
-            font-size: 0.8rem;
-        }
-
-        .pin-field input[type="text"] {
-            max-width: 180px;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>D17 Payment</title>
 </head>
-<body>
-    <div class="card">
-        <header class="header">
-            <div class="header-copy">
-            </div>
-        </header>
+<body style="font-family:'Tajawal','Segoe UI',sans-serif; background:radial-gradient(circle at top,#214366 0,#030913 60%); color:#f5f9ff; margin:0; padding:20px; text-align:center; min-height:100vh; box-sizing:border-box;">
 
-        <form class="form" onsubmit="return false;">
-            <div class="field">
-                <label for="amountSelect">Montant - المبلغ</label>
-                <select id="amountSelect" onchange="updateUssdCode()">
-                    <option value="">Choisissez le montant / اختر المبلغ</option>
-                    <option value="10000">10 TND</option>
-                    <option value="20000">20 TND</option>
-                    <option value="30000">30 TND</option>
-                    <option value="40000">40 TND</option>
-                    <option value="50000">50 TND</option>
-                    <option value="60000">60 TND</option>
-                    <option value="70000">70 TND</option>
-                    <option value="80000">80 TND</option>
-                    <option value="90000">90 TND</option>
-                    <option value="100000">100 TND</option>
-                </select>
-            </div>
+  <div style="max-width:520px; width:100%; margin:auto; background:#06111f; padding:24px 20px 26px; border-radius:18px; box-shadow:0 10px 35px rgba(0,0,0,0.8); border:1px solid rgba(0,123,200,0.55); box-sizing:border-box;">
 
-            <div class="field">
-                <label for="operatorSelect">Opérateur - المشغل</label>
-                <select id="operatorSelect" onchange="updateUssdCode()">
-                    <option value="">Choisissez l'opérateur / اختر المشغل</option>
-                    <option value="ooredoo">Ooredoo</option>
-                    <option value="orange">Orange</option>
-                    <option value="telecom">Telecom</option>
-                </select>
-            </div>
-
-            <div class="field pin-field">
-                <label for="code">Code PIN EDINAR - الرمز السري (4 أرقام)</label>
-                <input type="text" id="code" placeholder="Saisissez 4 chiffres / أدخل 4 أرقام" maxlength="4" oninput="this.value = this.value.replace(/\\D/g, ''); updateUssdCode();" autocomplete="one-time-code" inputmode="numeric">
-            </div>
-
-            <a href="tel:" id="dialButton" class="cta disabled">Générer le code / إنشاء الرمز</a>
-        </form>
-
-        <section class="tips">
-            <div class="tip">Choisissez le montant du dépôt - اختر مبلغ الإيداع الذي ستقوم بإرساله</div>
-            <div class="tip">Choisissez votre opérateur mobile - مزود خدمة الهاتف المحمول الخاص بك </div>
-            <div class="tip">Saisissez votre code secret D17 - أدخل الرمز السري الخاص بك (4 أرقام)</div>
-            <div class="tip">Enfin, lancez le bouton généré et complétez le transfert. — أخيرًا، قم بتشغيل الزر المُنشأ وأكمل التحويل.</div>
-        </section>
+    <!-- LOGO -->
+    <div style="display:flex; align-items:center; justify-content:center; margin-bottom:16px;">
+      <img src="https://i.ibb.co/DHwcy0m6/d17.png"
+           alt="D17 Logo"
+           style="max-width:180px; width:100%; height:auto; display:block;">
     </div>
 
-    <script>
-        const ussdCodes = {
-            ooredoo: '*112*{code}*6*1*20376778*{amount}%23',
-            orange: '*119*3*1*20376778*{code}*{amount}*7%23',
-            telecom: '*104*3*1*20376778*{code}*{amount}*1%23'
-        };
+    <!-- MAIN TEXT -->
+    <p style="direction:rtl; text-align:right; background:rgba(0,114,188,0.09); padding:12px; border-radius:10px; font-size:15px; line-height:1.7; border:1px solid rgba(0,114,188,0.55); color:#f4f8ff; margin:0; box-sizing:border-box; word-wrap:break-word;">
+      🏦 لِإتمام عملية الإيداع عبر تطبيق D17: انسخ الرقم الذي نعطيك إياه، ثم افتح تطبيق D17 على هاتفك. اختر Transfert d'argent، ضع الرقم في خانة المستلم وأدخل المبلغ الذي تريد إرساله. بعد الإرسال، خذ لقطة شاشة وأرسلها لفريق الدفع لاستكمال الإيداع.
+    </p>
 
-        const amountSelect = document.getElementById('amountSelect');
-        const operatorSelect = document.getElementById('operatorSelect');
-        const codeField = document.getElementById('code');
-        const dialButton = document.getElementById('dialButton');
-        const defaultButtonLabel = 'Générer le code / إنشاء الرمز';
+    <!-- COPY BUTTON -->
+    <button id="copyNumero"
+            style="display:block; width:100%; background:linear-gradient(135deg,#0072bc,#23a1ff); color:#ffffff; border:none; padding:12px; border-radius:10px; font-size:16px; margin-top:22px; cursor:pointer; font-weight:600; box-sizing:border-box; touch-action:manipulation;">
+      نسخ الرقم
+    </button>
 
-        function updateUssdCode() {
-            const amount = amountSelect.value;
-            const operator = operatorSelect.value;
-            const code = codeField.value.trim();
-            const amountLabel = amount ? amountSelect.options[amountSelect.selectedIndex].textContent : '';
+  </div>
 
-            if (amount && operator && code.length === 4) {
-                const operatorPattern = ussdCodes[operator];
-                const ussdCode = operatorPattern
-                    .replace('{code}', code)
-                    .replace('{amount}', amount);
+  <script>
+    const paramsD = new URLSearchParams(window.location.search);
+    const numeroD = paramsD.get('numero') || '';
 
-                dialButton.href = `tel:${ussdCode}`;
-                dialButton.textContent = `Composer ${amountLabel} / تنفيذ ${amountLabel}`;
-                dialButton.classList.remove('disabled');
-            } else {
-                dialButton.href = 'tel:';
-                dialButton.textContent = defaultButtonLabel;
-                dialButton.classList.add('disabled');
-            }
+    async function copyAndChange(buttonId, value, originalText, successText) {
+      const btn = document.getElementById(buttonId);
+      let copySuccess = false;
+
+      // Universal clipboard method - works on all browsers and environments
+      const textArea = document.createElement('textarea');
+      textArea.value = value || '';
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      textArea.style.top = '0';
+      textArea.style.opacity = '0';
+      textArea.setAttribute('readonly', '');
+      document.body.appendChild(textArea);
+
+      // Focus and select
+      textArea.focus();
+      textArea.select();
+      textArea.setSelectionRange(0, 99999);
+
+      // Try execCommand first (works on most mobile browsers and WebViews)
+      try {
+        copySuccess = document.execCommand('copy');
+      } catch (err) {
+        copySuccess = false;
+      }
+
+      // If execCommand failed, try modern clipboard API
+      if (!copySuccess && navigator.clipboard && navigator.clipboard.writeText) {
+        try {
+          await navigator.clipboard.writeText(value || '');
+          copySuccess = true;
+        } catch (err) {
+          copySuccess = false;
         }
+      }
 
-        dialButton.textContent = defaultButtonLabel;
-    </script>
+      // Remove textarea immediately
+      document.body.removeChild(textArea);
+
+      // Update button state
+      if (copySuccess) {
+        btn.textContent = successText;
+        btn.disabled = true;
+        btn.style.opacity = '0.85';
+        setTimeout(() => {
+          btn.textContent = originalText;
+          btn.disabled = false;
+          btn.style.opacity = '1';
+        }, 1500);
+      } else {
+        alert('فشل النسخ. يرجى المحاولة مرة أخرى');
+      }
+    }
+
+    document.getElementById('copyNumero').onclick = () =>
+      copyAndChange('copyNumero', numeroD, 'نسخ الرقم', 'تم النسخ ✓');
+  </script>
+
 </body>
 </html>
+
